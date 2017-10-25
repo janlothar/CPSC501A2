@@ -74,6 +74,9 @@ public class Inspector {
 					System.out.println("\t\t" + parameterName);
 				}
 			}
+			//print return type
+			System.out.println("\tReturn type: ");
+			System.out.println("\t\t" + getReturnType(toInspectMethods[i]));
 		}
 	}
 	
@@ -99,5 +102,11 @@ public class Inspector {
 		}
 		
 		return parameterNames;
+	}
+	
+	public String getReturnType(Method toInspect) {
+		
+		String returnType = toInspect.getReturnType().getName();
+		return returnType;
 	}
 }
