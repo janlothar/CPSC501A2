@@ -6,9 +6,17 @@ public class Inspector {
 		
 		Class classToInspect = obj.getClass();
 		
+		getClassName(classToInspect);
+		
 		if(recursive) {
 			
 		}
 	       
     }
+	
+	public void getClassName(Class toInspect) {
+		
+		String className = toInspect.getName();
+		System.out.println("Class name: " + className);
+	}
 }
