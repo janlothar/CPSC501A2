@@ -50,9 +50,11 @@ public class Inspector {
 		
 		for (int i=0; i<toInspectMethods.length; i++) {
 			methodNames[i] = toInspectMethods[i].getName();
+			//Print method names
 			System.out.println("Method: " + methodNames[i]);
+			//print exceptions thrown
 			System.out.println("\tExceptions thrown: ");
-			String[] exceptionNames = getMethodExceptions(toInspectMethods[i]);
+			String[] exceptionNames = getMethodExceptionNames(toInspectMethods[i]);
 			if (exceptionNames.length == 0) {
 				System.out.println("\t\tNone");
 			}
@@ -60,11 +62,22 @@ public class Inspector {
 				for(String exceptionName : exceptionNames) {
 					System.out.println("\t\t" + exceptionName);
 				}
-			}			
+			}
+			//print parameter types
+			System.out.println("\tParameter types: ");
+			String[] parameterNames = getParameterNames(toInspectMethods[i]);
+			if (parameterNames.length == 0) {
+				System.out.println("\t\tNone");
+			}
+			else {
+				for(String parameterName : parameterNames) {
+					System.out.println("\t\t" + parameterName);
+				}
+			}
 		}
 	}
 	
-	public String[] getMethodExceptions(Method toInspect) {
+	public String[] getMethodExceptionNames(Method toInspect) {
 		
 		Class[] exceptionTypes = toInspect.getExceptionTypes();
 		String[] exceptionNames = new String[exceptionTypes.length];
@@ -74,5 +87,17 @@ public class Inspector {
 		}
 		
 		return exceptionNames;
+	}
+	
+	public String[] getParameterNames(Method toInspect) {
+		
+		Class[] parameterTypes = toInspect.getParameterTypes();
+		String[] parameterNames = new String[parameterTypes.length];
+		
+		for(int i=0; i<parameterTypes.length; i++) {
+			parameterNames[i] = parameterTypes[i].getName();
+		}
+		
+		return parameterNames;
 	}
 }
