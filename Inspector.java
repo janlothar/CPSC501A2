@@ -1,5 +1,7 @@
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Vector;
+import java.util.zip.InflaterInputStream;
 
 public class Inspector {
 
@@ -44,8 +46,9 @@ public class Inspector {
 	}
 	
 	public void getMethodNames(Class toInspect) {
-		
-		Method[] toInspectMethods = toInspect.getMethods();
+//		System.out.println("DEBUG: class=" + toInspect.getName());
+		Method[] toInspectMethods = toInspect.getDeclaredMethods();
+//		System.out.println("DEBUG: :length of toInspectMethods= " + toInspectMethods.length);
 		String[] methodNames = new String[toInspectMethods.length];
 		
 		for (int i=0; i<toInspectMethods.length; i++) {
@@ -77,6 +80,9 @@ public class Inspector {
 			//print return type
 			System.out.println("\tReturn type: ");
 			System.out.println("\t\t" + getReturnType(toInspectMethods[i]));
+			//print modifiers
+			System.out.println("\tModifiers: ");
+			System.out.println("\t\t" + Modifier.toString(toInspectMethods[i].getModifiers()));
 		}
 	}
 	
