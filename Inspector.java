@@ -1,3 +1,5 @@
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Vector;
@@ -13,6 +15,8 @@ public class Inspector {
 		getSuperclassName(classToInspect);
 		getInterfaceNames(classToInspect);
 		getMethodNames(classToInspect);
+		getConstructorNames(classToInspect);
+		getFieldNames(classToInspect);
 		
 		if(recursive) {
 			
@@ -46,15 +50,15 @@ public class Inspector {
 	}
 	
 	public void getMethodNames(Class toInspect) {
-//		System.out.println("DEBUG: class=" + toInspect.getName());
+
 		Method[] toInspectMethods = toInspect.getDeclaredMethods();
-//		System.out.println("DEBUG: :length of toInspectMethods= " + toInspectMethods.length);
 		String[] methodNames = new String[toInspectMethods.length];
 		
 		for (int i=0; i<toInspectMethods.length; i++) {
+			toInspectMethods[i].setAccessible(true);
 			methodNames[i] = toInspectMethods[i].getName();
 			//Print method names
-			System.out.println("Method: " + methodNames[i]);
+			System.out.println("\nMethod: " + methodNames[i]);
 			//print exceptions thrown
 			System.out.println("\tExceptions thrown: ");
 			String[] exceptionNames = getMethodExceptionNames(toInspectMethods[i]);
@@ -68,7 +72,7 @@ public class Inspector {
 			}
 			//print parameter types
 			System.out.println("\tParameter types: ");
-			String[] parameterNames = getParameterNames(toInspectMethods[i]);
+			String[] parameterNames = getMethodParameterNames(toInspectMethods[i]);
 			if (parameterNames.length == 0) {
 				System.out.println("\t\tNone");
 			}
@@ -79,10 +83,10 @@ public class Inspector {
 			}
 			//print return type
 			System.out.println("\tReturn type: ");
-			System.out.println("\t\t" + getReturnType(toInspectMethods[i]));
+			System.out.println("\t\t" + getMethodReturnType(toInspectMethods[i]));
 			//print modifiers
 			System.out.println("\tModifiers: ");
-			System.out.println("\t\t" + getModiferNames(toInspectMethods[i]));
+			System.out.println("\t\t" + getMethodModiferNames(toInspectMethods[i]));
 		}
 	}
 	
@@ -98,7 +102,7 @@ public class Inspector {
 		return exceptionNames;
 	}
 	
-	public String[] getParameterNames(Method toInspect) {
+	public String[] getMethodParameterNames(Method toInspect) {
 		
 		Class[] parameterTypes = toInspect.getParameterTypes();
 		String[] parameterNames = new String[parameterTypes.length];
@@ -110,16 +114,77 @@ public class Inspector {
 		return parameterNames;
 	}
 	
-	public String getReturnType(Method toInspect) {
+	public String getMethodReturnType(Method toInspect) {
 		
 		String returnType = toInspect.getReturnType().getName();
 		return returnType;
 	}
 	
-	public String getModiferNames(Method toInspect) {
+	public String getMethodModiferNames(Method toInspect) {
 		
 		int modsEncoded = toInspect.getModifiers();
 		String modifiers = Modifier.toString(modsEncoded);
 		return modifiers;
+	}
+	
+	public void getConstructorNames(Class toInspect) {
+		
+		Constructor[] constructors = toInspect.getDeclaredConstructors();
+		String[] constructorNames = new String[constructors.length];
+		
+		for (int i = 0; i < constructors.length; i++) {
+			constructors[i].setAccessible(true);
+			constructorNames[i] = constructors[i].getName();
+			//print constructor names
+			System.out.println("\nConstructor: " + constructorNames[i]);
+			//print constructor parameters
+			System.out.println("\tParameters:");
+			String[] parameterNames = getConstructorParameterNames(constructors[i]);
+			if (parameterNames.length == 0) {
+				System.out.println("\t\tNone");
+			}
+			else {
+				for(String parameterName : parameterNames) {
+					System.out.println("\t\t" + parameterName);
+				}
+			}
+			//print constructor modifiers
+			System.out.println("\tModifiers: ");
+			System.out.println("\t\t" + getConstructorModifierNames(constructors[i]));
+		}
+		
+	}
+	
+	public String[] getConstructorParameterNames(Constructor toInspect) {
+		
+		Class[] parameters = toInspect.getParameterTypes();
+		String[] parameterNames = new String[parameters.length];
+		
+		for (int i = 0; i < parameters.length; i++) {
+			parameterNames[i] = parameters[i].getName();
+		}
+		
+		return parameterNames;
+	}
+	
+	public String getConstructorModifierNames(Constructor toInspect) {
+		
+		int modsEncoded = toInspect.getModifiers();
+		String modifiers = Modifier.toString(modsEncoded);
+		return modifiers;
+	}
+	
+	public void getFieldNames(Class toInspect) {
+		
+		Field[] fields = toInspect.getDeclaredFields();
+		String[] fieldNames = new String[fields.length];
+		System.out.println("DEBUG: before field loop");
+		for (int i = 0; i < fields.length; i++) {
+			System.out.println("DEBUG: after field loop");
+			fields[i].setAccessible(true);
+			fieldNames[i] = fields[i].getName();
+			//print field names
+			System.out.println("Field names: " + fieldNames[i]);
+		}
 	}
 }
