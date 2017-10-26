@@ -7,7 +7,16 @@ import java.util.zip.InflaterInputStream;
 
 public class Inspector {
 
+	Boolean recurse = false;
+	
 	public void inspect(Object obj, boolean recursive) {
+		
+		if(recursive) {
+			recurse = true;
+		}
+		else {
+			recurse = false;
+		}
 		
 		Class classToInspect = obj.getClass();
 		
@@ -18,9 +27,7 @@ public class Inspector {
 		getConstructorNames(classToInspect);
 		getFieldNames(obj);
 		
-		if(recursive) {
-			
-		}
+		
 	       
     }
 	
