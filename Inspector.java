@@ -82,7 +82,7 @@ public class Inspector {
 			System.out.println("\t\t" + getReturnType(toInspectMethods[i]));
 			//print modifiers
 			System.out.println("\tModifiers: ");
-			System.out.println("\t\t" + Modifier.toString(toInspectMethods[i].getModifiers()));
+			System.out.println("\t\t" + getModiferNames(toInspectMethods[i]));
 		}
 	}
 	
@@ -114,5 +114,12 @@ public class Inspector {
 		
 		String returnType = toInspect.getReturnType().getName();
 		return returnType;
+	}
+	
+	public String getModiferNames(Method toInspect) {
+		
+		int modsEncoded = toInspect.getModifiers();
+		String modifiers = Modifier.toString(modsEncoded);
+		return modifiers;
 	}
 }
