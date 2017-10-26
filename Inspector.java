@@ -16,7 +16,7 @@ public class Inspector {
 		getInterfaceNames(classToInspect);
 		getMethodNames(classToInspect);
 		getConstructorNames(classToInspect);
-		getFieldNames(classToInspect);
+		getFieldNames(obj);
 		
 		if(recursive) {
 			
@@ -174,17 +174,23 @@ public class Inspector {
 		return modifiers;
 	}
 	
-	public void getFieldNames(Class toInspect) {
+	public void getFieldNames(Object toInspect) {
 		
-		Field[] fields = toInspect.getDeclaredFields();
+		Field[] fields = toInspect.getClass().getDeclaredFields();
 		String[] fieldNames = new String[fields.length];
-		System.out.println("DEBUG: before field loop");
+		System.out.println("Fields: ");
+		
 		for (int i = 0; i < fields.length; i++) {
-			System.out.println("DEBUG: after field loop");
 			fields[i].setAccessible(true);
 			fieldNames[i] = fields[i].getName();
-			//print field names
-			System.out.println("Field names: " + fieldNames[i]);
+			//print fields
+			String fieldModifier = Modifier.toString(fields[i].getModifiers());
+			String fieldType = fields[i].getType().toString();
+			System.out.print("\t" + " " + fieldType + " " + fieldModifier + " " + fieldNames[i]);
+			try {
+				Object fieldValue = fields[i].get(toInspect);
+				System.out.print(" = " + fieldValue + "\n");
+			}catch(Exception e) {}
 		}
 	}
 }
