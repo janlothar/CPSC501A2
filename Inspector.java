@@ -121,34 +121,6 @@ public class Inspector {
 		return getModifierNames(modsEncoded);
 	}
 	
-//	public void getConstructorNames(Class toInspect) {
-//		
-//		Constructor[] constructors = toInspect.getDeclaredConstructors();
-//		String[] constructorNames = new String[constructors.length];
-//		
-//		for (int i = 0; i < constructors.length; i++) {
-//			constructors[i].setAccessible(true);
-//			constructorNames[i] = constructors[i].getName();
-//			//print constructor names
-//			System.out.println("\nConstructor: " + constructorNames[i]);
-//			//print constructor parameters
-//			System.out.println("\tParameters:");
-//			String[] parameterNames = getConstructorParameterNames(constructors[i]);
-//			if (parameterNames.length == 0) {
-//				System.out.println("\t\tNone");
-//			}
-//			else {
-//				for(String parameterName : parameterNames) {
-//					System.out.println("\t\t" + parameterName);
-//				}
-//			}
-//			//print constructor modifiers
-//			System.out.println("\tModifiers: ");
-//			System.out.println("\t\t" + getConstructorModifierNames(constructors[i]));
-//		}
-//		
-//	}
-	
 	public void getConstructorNames(Class toInspect) {
 		
 		Constructor[] constructors = toInspect.getDeclaredConstructors();
@@ -225,7 +197,7 @@ public class Inspector {
 			//print fields
 			String fieldModifier = Modifier.toString(fields[i].getModifiers());
 			String fieldType = fields[i].getType().toString();
-			System.out.print("\t" + " " + fieldType + " " + fieldModifier + " " + fieldNames[i]);
+			System.out.print("\t" + " " + fieldModifier + " " + fieldType + " " + fieldNames[i]);
 			try {
 				Object fieldValue = fields[i].get(toInspect);
 				System.out.print(" = " + fieldValue + "\n");
