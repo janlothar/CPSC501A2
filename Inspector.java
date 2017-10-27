@@ -121,33 +121,70 @@ public class Inspector {
 		return getModifierNames(modsEncoded);
 	}
 	
+//	public void getConstructorNames(Class toInspect) {
+//		
+//		Constructor[] constructors = toInspect.getDeclaredConstructors();
+//		String[] constructorNames = new String[constructors.length];
+//		
+//		for (int i = 0; i < constructors.length; i++) {
+//			constructors[i].setAccessible(true);
+//			constructorNames[i] = constructors[i].getName();
+//			//print constructor names
+//			System.out.println("\nConstructor: " + constructorNames[i]);
+//			//print constructor parameters
+//			System.out.println("\tParameters:");
+//			String[] parameterNames = getConstructorParameterNames(constructors[i]);
+//			if (parameterNames.length == 0) {
+//				System.out.println("\t\tNone");
+//			}
+//			else {
+//				for(String parameterName : parameterNames) {
+//					System.out.println("\t\t" + parameterName);
+//				}
+//			}
+//			//print constructor modifiers
+//			System.out.println("\tModifiers: ");
+//			System.out.println("\t\t" + getConstructorModifierNames(constructors[i]));
+//		}
+//		
+//	}
+	
 	public void getConstructorNames(Class toInspect) {
 		
 		Constructor[] constructors = toInspect.getDeclaredConstructors();
-		String[] constructorNames = new String[constructors.length];
-		
+		System.out.println("Constructors: ");
 		for (int i = 0; i < constructors.length; i++) {
 			constructors[i].setAccessible(true);
-			constructorNames[i] = constructors[i].getName();
-			//print constructor names
-			System.out.println("\nConstructor: " + constructorNames[i]);
-			//print constructor parameters
-			System.out.println("\tParameters:");
+			String modifierName = getConstructorModifierNames(constructors[i]);
+			String constructorName = constructors[i].getName();
 			String[] parameterNames = getConstructorParameterNames(constructors[i]);
-			if (parameterNames.length == 0) {
-				System.out.println("\t\tNone");
-			}
-			else {
-				for(String parameterName : parameterNames) {
-					System.out.println("\t\t" + parameterName);
-				}
-			}
-			//print constructor modifiers
-			System.out.println("\tModifiers: ");
-			System.out.println("\t\t" + getConstructorModifierNames(constructors[i]));
+			String parameterNamesformatted = formatParameterNames(parameterNames);
+			System.out.println("\tconstructor " + (i+1) + ":\t" + modifierName + " " + constructorName + parameterNamesformatted);
+			
 		}
 		
-	}	
+	}
+	
+	public String formatParameterNames(String[] parameterNames) {
+		
+		String formattedParameterNames = new String();
+		
+		if (parameterNames.length == 0) {
+			formattedParameterNames = "(No parameters)";
+		}
+		else {
+			formattedParameterNames = "(";
+			for(int i=0; i<parameterNames.length; i++) {
+				formattedParameterNames += (parameterNames[i] + " param"+(i+1));
+				if (i<parameterNames.length-1) {
+					formattedParameterNames += ", ";
+				}
+			}
+			formattedParameterNames += ")";
+		}
+		
+		return formattedParameterNames;
+	}
 	
 	public String[] getConstructorParameterNames(Constructor toInspect) {
 		
