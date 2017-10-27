@@ -109,22 +109,10 @@ public class Inspector {
 		}
 	}
 	
-	public String formatExceptionNames(String[] exceptionNames) {
+	public String getMethodReturnType(Method toInspect) {
 		
-		String formattedExceptionNames = new String();
-		
-		if (exceptionNames.length == 0) {
-			formattedExceptionNames= "no exceptions";
-		} else {
-			for (int i = 0; i < exceptionNames.length; i++) {
-				formattedExceptionNames += exceptionNames[i];
-				if (i<exceptionNames.length-1) {
-					formattedExceptionNames += ", ";
-				}
-			}
-		}
-		
-		return formattedExceptionNames;
+		String returnType = toInspect.getReturnType().getName();
+		return returnType;
 	}
 	
 	public String[] getMethodExceptionNames(Method toInspect) {
@@ -139,10 +127,10 @@ public class Inspector {
 		return getParameterNames(parameterTypes);
 	}
 	
-	public String getMethodReturnType(Method toInspect) {
+	public String[] getConstructorParameterNames(Constructor toInspect) {
 		
-		String returnType = toInspect.getReturnType().getName();
-		return returnType;
+		Class[] parameters = toInspect.getParameterTypes();
+		return getParameterNames(parameters);
 	}
 	
 	public String getMethodModiferNames(Method toInspect) {
@@ -150,7 +138,28 @@ public class Inspector {
 		int modsEncoded = toInspect.getModifiers();
 		return getModifierNames(modsEncoded);
 	}
+	
+	public String getConstructorModifierNames(Constructor toInspect) {
+		
+		int modsEncoded = toInspect.getModifiers();
+		return getModifierNames(modsEncoded);
+	}
 
+	private String[] getParameterNames(Class[] parameters) {
+		String[] parameterNames = new String[parameters.length];
+		
+		for (int i = 0; i < parameters.length; i++) {
+			parameterNames[i] = parameters[i].getName();
+		}
+		
+		return parameterNames;
+	}
+
+	private String getModifierNames(int modsEncoded) {
+		String modifiers = Modifier.toString(modsEncoded);
+		return modifiers;
+	}
+	
 	public String formatParameterNames(String[] parameterNames) {
 		
 		String formattedParameterNames = new String();
@@ -172,30 +181,21 @@ public class Inspector {
 		return formattedParameterNames;
 	}
 	
-	public String[] getConstructorParameterNames(Constructor toInspect) {
+	public String formatExceptionNames(String[] exceptionNames) {
 		
-		Class[] parameters = toInspect.getParameterTypes();
-		return getParameterNames(parameters);
-	}
-
-	private String[] getParameterNames(Class[] parameters) {
-		String[] parameterNames = new String[parameters.length];
+		String formattedExceptionNames = new String();
 		
-		for (int i = 0; i < parameters.length; i++) {
-			parameterNames[i] = parameters[i].getName();
+		if (exceptionNames.length == 0) {
+			formattedExceptionNames= "no exceptions";
+		} else {
+			for (int i = 0; i < exceptionNames.length; i++) {
+				formattedExceptionNames += exceptionNames[i];
+				if (i<exceptionNames.length-1) {
+					formattedExceptionNames += ", ";
+				}
+			}
 		}
 		
-		return parameterNames;
-	}
-	
-	public String getConstructorModifierNames(Constructor toInspect) {
-		
-		int modsEncoded = toInspect.getModifiers();
-		return getModifierNames(modsEncoded);
-	}
-
-	private String getModifierNames(int modsEncoded) {
-		String modifiers = Modifier.toString(modsEncoded);
-		return modifiers;
+		return formattedExceptionNames;
 	}
 }
