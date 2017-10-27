@@ -118,8 +118,7 @@ public class Inspector {
 	public String getMethodModiferNames(Method toInspect) {
 		
 		int modsEncoded = toInspect.getModifiers();
-		String modifiers = Modifier.toString(modsEncoded);
-		return modifiers;
+		return getModifierNames(modsEncoded);
 	}
 	
 	public void getConstructorNames(Class toInspect) {
@@ -169,6 +168,10 @@ public class Inspector {
 	public String getConstructorModifierNames(Constructor toInspect) {
 		
 		int modsEncoded = toInspect.getModifiers();
+		return getModifierNames(modsEncoded);
+	}
+
+	private String getModifierNames(int modsEncoded) {
 		String modifiers = Modifier.toString(modsEncoded);
 		return modifiers;
 	}
