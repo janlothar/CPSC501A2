@@ -163,7 +163,7 @@ public class Inspector {
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
 				e.printStackTrace(pw);
-				fieldDetails[i] += ("IllegalAccessException on this field: " + pw);
+				fieldDetails[i] += (" = IllegalAccessException on this field: " + sw.toString());
 			}
 		}
 		
