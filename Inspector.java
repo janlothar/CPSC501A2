@@ -23,9 +23,9 @@ public class Inspector {
 		String className = getClassName(classToInspect);
 		String superclassName = getSuperclassName(classToInspect);
 		String[] interfaceNames = getInterfaceNames(classToInspect);
-		String[] methodNames = getMethodNames(classToInspect);
-		String[] constructorNames = getConstructorNames(classToInspect);
-		String[] fieldNames = getFieldNames(obj);
+		String[] methodDetails = getMethodDetails(classToInspect);
+		String[] constructorDetails = getConstructorDetails(classToInspect);
+		String[] fieldDetails = getFieldDetails(obj);
 		
 		System.out.println("Class name: " + className);
 		System.out.println("Superclass name: " + superclassName);
@@ -38,16 +38,16 @@ public class Inspector {
 			}
 		}
 		System.out.println("Methods: ");
-		for (int i = 0; i < methodNames.length; i++) {
-			System.out.println("\t" + methodNames[i]);
+		for (int i = 0; i < methodDetails.length; i++) {
+			System.out.println("\t" + methodDetails[i]);
 		}
 		System.out.println("Constructors: ");
-		for (int i = 0; i < constructorNames.length; i++) {
-			System.out.println("\t" + constructorNames[i]);
+		for (int i = 0; i < constructorDetails.length; i++) {
+			System.out.println("\t" + constructorDetails[i]);
 		}
 		System.out.println("Fields: ");
-		for (int i = 0; i < fieldNames.length; i++) {
-			System.out.println("\t" + fieldNames[i]);
+		for (int i = 0; i < fieldDetails.length; i++) {
+			System.out.println("\t" + fieldDetails[i]);
 		}
     }
 	
@@ -83,7 +83,7 @@ public class Inspector {
 	}
 	
 	
-	public String[] getMethodNames(Class toInspect) {
+	public String[] getMethodDetails(Class toInspect) {
 
 		Method[] methods = toInspect.getDeclaredMethods();
 		String[] methodNames = new String[methods.length];
@@ -104,7 +104,7 @@ public class Inspector {
 	}
 	
 	
-	public String[] getConstructorNames(Class toInspect) {
+	public String[] getConstructorDetails(Class toInspect) {
 		
 		Constructor[] constructors = toInspect.getDeclaredConstructors();
 		String[] constructorNames = new String[constructors.length];
@@ -122,7 +122,7 @@ public class Inspector {
 	}
 	
 	
-	public String[] getFieldNames(Object toInspect) {
+	public String[] getFieldDetails(Object toInspect) {
 		
 		Field[] fields = toInspect.getClass().getDeclaredFields();
 		String[] fieldNames = new String[fields.length];
