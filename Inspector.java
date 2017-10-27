@@ -86,7 +86,7 @@ public class Inspector {
 	public String[] getMethodDetails(Class toInspect) {
 
 		Method[] methods = toInspect.getDeclaredMethods();
-		String[] methodNames = new String[methods.length];
+		String[] methodDetails = new String[methods.length];
 		
 		for (int i=0; i<methods.length; i++) {
 			methods[i].setAccessible(true);
@@ -97,17 +97,17 @@ public class Inspector {
 			String formattedParameterNames = formatParameterNames(parameterNames);
 			String[] exceptionNames = getMethodExceptionNames(methods[i]);
 			String formattedExceptionNames = formatExceptionNames(exceptionNames);
-			methodNames[i] = ("method " + (i+1) + ":\t" + modifierName + " " + returnType + " " + methodName + formattedParameterNames + " throws " + formattedExceptionNames);
+			methodDetails[i] = ("method " + (i+1) + ":\t" + modifierName + " " + returnType + " " + methodName + formattedParameterNames + " throws " + formattedExceptionNames);
 		}
 		
-		return methodNames;
+		return methodDetails;
 	}
 	
 	
 	public String[] getConstructorDetails(Class toInspect) {
 		
 		Constructor[] constructors = toInspect.getDeclaredConstructors();
-		String[] constructorNames = new String[constructors.length];
+		String[] constructorDetails = new String[constructors.length];
 		
 		for (int i = 0; i < constructors.length; i++) {
 			constructors[i].setAccessible(true);
@@ -115,17 +115,17 @@ public class Inspector {
 			String constructorName = constructors[i].getName();
 			String[] parameterNames = getConstructorParameterNames(constructors[i]);
 			String parameterNamesformatted = formatParameterNames(parameterNames);
-			constructorNames[i] = ("constructor " + (i+1) + ":\t" + modifierName + " " + constructorName + parameterNamesformatted);			
+			constructorDetails[i] = ("constructor " + (i+1) + ":\t" + modifierName + " " + constructorName + parameterNamesformatted);			
 		}
 		
-		return constructorNames;
+		return constructorDetails;
 	}
 	
 	
 	public String[] getFieldDetails(Object toInspect) {
 		
 		Field[] fields = toInspect.getClass().getDeclaredFields();
-		String[] fieldNames = new String[fields.length];
+		String[] fieldDetails = new String[fields.length];
 		
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
@@ -133,14 +133,14 @@ public class Inspector {
 			//print fields
 			String fieldModifier = Modifier.toString(fields[i].getModifiers());
 			String fieldType = fields[i].getType().toString();
-			fieldNames[i] = ("field " + (i+1) + ":\t" + fieldModifier + " " + fieldType + " " + fieldName);
+			fieldDetails[i] = ("field " + (i+1) + ":\t" + fieldModifier + " " + fieldType + " " + fieldName);
 			try {
 				Object fieldValue = fields[i].get(toInspect);
-				fieldNames[i] += (" = " + fieldValue);
+				fieldDetails[i] += (" = " + fieldValue);
 			}catch(Exception e) {}
 		}
 		
-		return fieldNames;
+		return fieldDetails;
 	}
 	
 	
