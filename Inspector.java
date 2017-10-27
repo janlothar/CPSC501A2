@@ -34,7 +34,7 @@ public class Inspector {
 		System.out.println("Class name: " + className);
 		System.out.println("Superclass name: " + superclassName);
 		//print interfaces
-		System.out.println("Interfaces of Class:");
+		System.out.println("\nInterfaces of Class:");
 		if (interfaceNames.length == 0) {
 			System.out.println("\tNone");
 		} else {
@@ -43,7 +43,7 @@ public class Inspector {
 			}
 		}
 		//print method details
-		System.out.println("Methods: ");
+		System.out.println("\nMethods: ");
 		if (methodDetails.length == 0) {
 			System.out.println("\tNone");
 		} else {
@@ -52,7 +52,7 @@ public class Inspector {
 			}
 		}
 		//print constructor details
-		System.out.println("Constructors: ");
+		System.out.println("\nConstructors: ");
 		if (constructorDetails.length == 0) {
 			System.out.println("\tNone");
 		} else {
@@ -61,7 +61,7 @@ public class Inspector {
 			}
 		}
 		//print field details
-		System.out.println("Fields: ");
+		System.out.println("\nFields: ");
 		if (fieldDetails.length == 0) {
 			System.out.println("\tNone");
 		} else {
@@ -150,7 +150,6 @@ public class Inspector {
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
 			String fieldName = fields[i].getName();
-			//print fields
 			String fieldModifier = Modifier.toString(fields[i].getModifiers());
 			String fieldType = fields[i].getType().toString();
 			fieldDetails[i] = ("field " + (i+1) + ":\t" + fieldModifier + " " + fieldType + " " + fieldName);
