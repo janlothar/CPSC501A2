@@ -56,57 +56,40 @@ public class Inspector {
 		}
 	}
 	
-//	public void getMethodNames(Class toInspect) {
-//
-//		Method[] toInspectMethods = toInspect.getDeclaredMethods();
-//		String[] methodNames = new String[toInspectMethods.length];
-//		
-//		for (int i=0; i<toInspectMethods.length; i++) {
-//			toInspectMethods[i].setAccessible(true);
-//			methodNames[i] = toInspectMethods[i].getName();
-//			//Print method names
-//			System.out.println("\nMethod: " + methodNames[i]);
-//			//print exceptions thrown
-//			System.out.println("\tExceptions thrown: ");
-//			String[] exceptionNames = getMethodExceptionNames(toInspectMethods[i]);
-//			if (exceptionNames.length == 0) {
-//				System.out.println("\t\tNone");
-//			}
-//			else {
-//				for(String exceptionName : exceptionNames) {
-//					System.out.println("\t\t" + exceptionName);
-//				}
-//			}
-//			//print parameter types
-//			System.out.println("\tParameter types: ");
-//			String[] parameterNames = getMethodParameterNames(toInspectMethods[i]);
-//			if (parameterNames.length == 0) {
-//				System.out.println("\t\tNone");
-//			}
-//			else {
-//				for(String parameterName : parameterNames) {
-//					System.out.println("\t\t" + parameterName);
-//				}
-//			}
-//			//print return type
-//			System.out.println("\tReturn type: ");
-//			System.out.println("\t\t" + getMethodReturnType(toInspectMethods[i]));
-//			//print modifiers
-//			System.out.println("\tModifiers: ");
-//			System.out.println("\t\t" + getMethodModiferNames(toInspectMethods[i]));
-//		}
-//	}
-	
 	public void getMethodNames(Class toInspect) {
 
 		Method[] methods = toInspect.getDeclaredMethods();
-		
+		System.out.println("Methods: ");
 		for (int i=0; i<methods.length; i++) {
 			methods[i].setAccessible(true);
 			String modifierName = getMethodModiferNames(methods[i]);
+			String returnType = getMethodReturnType(methods[i]);
 			String methodName = methods[i].getName();
+			String[] parameterNames = getMethodParameterNames(methods[i]);
+			String formattedParameterNames = formatParameterNames(parameterNames);
+			String[] exceptionNames = getMethodExceptionNames(methods[i]);
+			String formattedExceptionNames = formatExceptionNames(exceptionNames);
+			System.out.println("\tmethod " + (i+1) + ":\t" + modifierName + " " + returnType + " " + methodName + formattedParameterNames + " throws " + formattedExceptionNames);
 			
 		}
+	}
+	
+	public String formatExceptionNames(String[] exceptionNames) {
+		
+		String formattedExceptionNames = new String();
+		
+		if (exceptionNames.length == 0) {
+			formattedExceptionNames= "no exceptions";
+		} else {
+			for (int i = 0; i < exceptionNames.length; i++) {
+				formattedExceptionNames += exceptionNames[i];
+				if (i<exceptionNames.length-1) {
+					formattedExceptionNames += ", ";
+				}
+			}
+		}
+		
+		return formattedExceptionNames;
 	}
 	
 	public String[] getMethodExceptionNames(Method toInspect) {
