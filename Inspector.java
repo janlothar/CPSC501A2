@@ -48,7 +48,7 @@ public class Inspector {
 			System.out.println("\tNone");
 		} else {
 			for (int i = 0; i < methodDetails.length; i++) {
-				System.out.println("\t" + methodDetails[i]);
+				System.out.println("\tmethod " + (i+1) + ":\t" + methodDetails[i]);
 			}
 		}
 		//print constructor details
@@ -57,7 +57,7 @@ public class Inspector {
 			System.out.println("\tNone");
 		} else {
 			for (int i = 0; i < constructorDetails.length; i++) {
-				System.out.println("\t" + constructorDetails[i]);
+				System.out.println("\tconstructor " + (i+1) + ":\t" + constructorDetails[i]);
 			}
 		}
 		//print field details
@@ -66,7 +66,7 @@ public class Inspector {
 			System.out.println("\tNone");
 		} else {
 			for (int i = 0; i < fieldDetails.length; i++) {
-				System.out.println("\t" + fieldDetails[i]);
+				System.out.println("\tfield " + (i+1) + ":\t" + fieldDetails[i]);
 			}
 		}
     }
@@ -117,7 +117,7 @@ public class Inspector {
 			String formattedParameterNames = formatParameterNames(parameterNames);
 			String[] exceptionNames = getMethodExceptionNames(methods[i]);
 			String formattedExceptionNames = formatExceptionNames(exceptionNames);
-			methodDetails[i] = ("method " + (i+1) + ":\t" + modifierName + " " + returnType + " " + methodName + formattedParameterNames + " throws " + formattedExceptionNames);
+			methodDetails[i] = (modifierName + " " + returnType + " " + methodName + formattedParameterNames + " throws " + formattedExceptionNames);
 		}
 		
 		return methodDetails;
@@ -135,7 +135,7 @@ public class Inspector {
 			String constructorName = constructors[i].getName();
 			String[] parameterNames = getConstructorParameterNames(constructors[i]);
 			String parameterNamesformatted = formatParameterNames(parameterNames);
-			constructorDetails[i] = ("constructor " + (i+1) + ":\t" + modifierName + " " + constructorName + parameterNamesformatted);			
+			constructorDetails[i] = (modifierName + " " + constructorName + parameterNamesformatted);			
 		}
 		
 		return constructorDetails;
@@ -152,7 +152,7 @@ public class Inspector {
 			String fieldName = fields[i].getName();
 			String fieldModifier = Modifier.toString(fields[i].getModifiers());
 			String fieldType = fields[i].getType().toString();
-			fieldDetails[i] = ("field " + (i+1) + ":\t" + fieldModifier + " " + fieldType + " " + fieldName);
+			fieldDetails[i] = (fieldModifier + " " + fieldType + " " + fieldName);
 			try {
 				Object fieldValue = fields[i].get(toInspect);
 				fieldDetails[i] += (" = " + fieldValue);
