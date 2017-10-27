@@ -100,25 +100,13 @@ public class Inspector {
 	public String[] getMethodExceptionNames(Method toInspect) {
 		
 		Class[] exceptionTypes = toInspect.getExceptionTypes();
-		String[] exceptionNames = new String[exceptionTypes.length];
-		
-		for(int i=0; i<exceptionTypes.length; i++) {
-			exceptionNames[i] = exceptionTypes[i].getName();
-		}
-		
-		return exceptionNames;
+		return getParameterNames(exceptionTypes);
 	}
 	
 	public String[] getMethodParameterNames(Method toInspect) {
 		
 		Class[] parameterTypes = toInspect.getParameterTypes();
-		String[] parameterNames = new String[parameterTypes.length];
-		
-		for(int i=0; i<parameterTypes.length; i++) {
-			parameterNames[i] = parameterTypes[i].getName();
-		}
-		
-		return parameterNames;
+		return getParameterNames(parameterTypes);
 	}
 	
 	public String getMethodReturnType(Method toInspect) {
@@ -160,11 +148,15 @@ public class Inspector {
 			System.out.println("\t\t" + getConstructorModifierNames(constructors[i]));
 		}
 		
-	}
+	}	
 	
 	public String[] getConstructorParameterNames(Constructor toInspect) {
 		
 		Class[] parameters = toInspect.getParameterTypes();
+		return getParameterNames(parameters);
+	}
+
+	private String[] getParameterNames(Class[] parameters) {
 		String[] parameterNames = new String[parameters.length];
 		
 		for (int i = 0; i < parameters.length; i++) {
