@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,6 +22,7 @@ public class Inspector {
 		
 		Class classToInspect = obj.getClass();
 		
+		//get class details
 		String className = getClassName(classToInspect);
 		String superclassName = getSuperclassName(classToInspect);
 		String[] interfaceNames = getInterfaceNames(classToInspect);
@@ -27,8 +30,10 @@ public class Inspector {
 		String[] constructorDetails = getConstructorDetails(classToInspect);
 		String[] fieldDetails = getFieldDetails(obj);
 		
+		//print class details
 		System.out.println("Class name: " + className);
 		System.out.println("Superclass name: " + superclassName);
+		//print interfaces
 		System.out.println("Interfaces of Class:");
 		if (interfaceNames.length == 0) {
 			System.out.println("\tNone");
@@ -37,17 +42,32 @@ public class Inspector {
 				System.out.println("\t" + interfaceNames[i]);
 			}
 		}
+		//print method details
 		System.out.println("Methods: ");
-		for (int i = 0; i < methodDetails.length; i++) {
-			System.out.println("\t" + methodDetails[i]);
+		if (methodDetails.length == 0) {
+			System.out.println("\tNone");
+		} else {
+			for (int i = 0; i < methodDetails.length; i++) {
+				System.out.println("\t" + methodDetails[i]);
+			}
 		}
+		//print constructor details
 		System.out.println("Constructors: ");
-		for (int i = 0; i < constructorDetails.length; i++) {
-			System.out.println("\t" + constructorDetails[i]);
+		if (constructorDetails.length == 0) {
+			System.out.println("\tNone");
+		} else {
+			for (int i = 0; i < constructorDetails.length; i++) {
+				System.out.println("\t" + constructorDetails[i]);
+			}
 		}
+		//print field details
 		System.out.println("Fields: ");
-		for (int i = 0; i < fieldDetails.length; i++) {
-			System.out.println("\t" + fieldDetails[i]);
+		if (fieldDetails.length == 0) {
+			System.out.println("\tNone");
+		} else {
+			for (int i = 0; i < fieldDetails.length; i++) {
+				System.out.println("\t" + fieldDetails[i]);
+			}
 		}
     }
 	
@@ -137,7 +157,14 @@ public class Inspector {
 			try {
 				Object fieldValue = fields[i].get(toInspect);
 				fieldDetails[i] += (" = " + fieldValue);
-			}catch(Exception e) {}
+			}catch(IllegalAccessException e) {
+				//converting stack trace to string uses code from this tutorial: 
+				//	http://www.baeldung.com/java-stacktrace-to-string
+				StringWriter sw = new StringWriter();
+				PrintWriter pw = new PrintWriter(sw);
+				e.printStackTrace(pw);
+				fieldDetails[i] += ("IllegalAccessException on this field: " + pw);
+			}
 		}
 		
 		return fieldDetails;
